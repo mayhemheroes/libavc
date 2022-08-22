@@ -1,0 +1,69 @@
+package {
+    // See: http://go/android-license-faq
+    // A large-scale-change added 'default_applicable_licenses' to import
+    // all of the 'license_kinds' from "external_libavc_license"
+    // to get the below license kinds:
+    //   SPDX-license-identifier-Apache-2.0
+    default_applicable_licenses: ["external_libavc_license"],
+}
+
+cc_defaults {
+    name: "libavc_mvc_fuzzer_defaults",
+    host_supported:true,
+    static_libs: ["liblog"],
+    target: {
+        darwin: {
+            enabled: false,
+        },
+    },
+    fuzz_config: {
+        cc: [
+            "android-media-fuzzing-reports@google.com",
+        ],
+        componentid: 155276,
+    },
+}
+
+cc_fuzz {
+    name: "avc_dec_fuzzer",
+    defaults: ["libavc_mvc_fuzzer_defaults"],
+    srcs: [
+        "avc_dec_fuzzer.cpp",
+    ],
+    static_libs: [
+        "libavcdec",
+    ],
+}
+
+cc_fuzz {
+    name: "mvc_dec_fuzzer",
+    defaults: ["libavc_mvc_fuzzer_defaults"],
+    srcs: [
+        "mvc_dec_fuzzer.cpp",
+    ],
+    static_libs: [
+        "libmvcdec",
+    ],
+}
+
+cc_fuzz {
+    name: "avc_enc_fuzzer",
+    host_supported: true,
+    srcs: [
+        "avc_enc_fuzzer.cpp",
+    ],
+    static_libs: [
+        "libavcenc",
+        "liblog",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+    fuzz_config: {
+        cc: [
+            "android-media-fuzzing-reports@google.com",
+        ],
+        componentid: 155276,
+    },
+}
