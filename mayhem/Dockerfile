@@ -20,7 +20,7 @@ COPY . libavc
 RUN rm -rf libavc/mayhem
 ADD https://storage.googleapis.com/android_media/external/libavc/fuzzer/avc_dec_fuzzer_seed_corpus.zip $SRC/
 COPY mayhem/build.sh $SRC/
-WORKDIR libavc
+WORKDIR $SRC/libavc
 
 ENV FUZZING_LANGUAGE=c++ SANITIZER=address ARCHITECTURE=x86_64
 RUN compile
